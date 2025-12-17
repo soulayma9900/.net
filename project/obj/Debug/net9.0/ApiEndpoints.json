@@ -1,5 +1,47 @@
 [
   {
+    "ContainingType": "project.Controllers.AccountController",
+    "Method": "Login",
+    "RelativePath": "api/Account/Login",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "loginUser",
+        "Type": "project.DTO.LoginDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "project.Controllers.AccountController",
+    "Method": "GetMonProfil",
+    "RelativePath": "api/Account/MonProfil",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "project.Controllers.AccountController",
+    "Method": "Register",
+    "RelativePath": "api/Account/Register",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "userDto",
+        "Type": "project.DTO.RegisterUserDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "project.Controllers.MedicamentController",
     "Method": "GetAllMedicaments",
     "RelativePath": "api/Medicament",
@@ -75,7 +117,11 @@
   },
   {
     "ContainingType": "project.Controllers.OrdonnanceController",
+<<<<<<< HEAD
     "Method": "GetAll",
+=======
+    "Method": "GetAllOrdonnances",
+>>>>>>> c584dda784870006b67316603a0b4e330c6c288a
     "RelativePath": "api/Ordonnance",
     "HttpMethod": "GET",
     "IsController": true,
@@ -85,7 +131,11 @@
   },
   {
     "ContainingType": "project.Controllers.OrdonnanceController",
+<<<<<<< HEAD
     "Method": "Create",
+=======
+    "Method": "AddOrdonnance",
+>>>>>>> c584dda784870006b67316603a0b4e330c6c288a
     "RelativePath": "api/Ordonnance",
     "HttpMethod": "POST",
     "IsController": true,
@@ -101,7 +151,27 @@
   },
   {
     "ContainingType": "project.Controllers.OrdonnanceController",
+<<<<<<< HEAD
     "Method": "GetById",
+=======
+    "Method": "UpdateOrdonnance",
+    "RelativePath": "api/Ordonnance",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "dto",
+        "Type": "project.DTO.OrdonnanceDTOs",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "project.Controllers.OrdonnanceController",
+    "Method": "GetOrdonnanceById",
+>>>>>>> c584dda784870006b67316603a0b4e330c6c288a
     "RelativePath": "api/Ordonnance/{id}",
     "HttpMethod": "GET",
     "IsController": true,
@@ -117,6 +187,7 @@
   },
   {
     "ContainingType": "project.Controllers.OrdonnanceController",
+<<<<<<< HEAD
     "Method": "Update",
     "RelativePath": "api/Ordonnance/{id}",
     "HttpMethod": "PUT",
@@ -139,6 +210,9 @@
   {
     "ContainingType": "project.Controllers.OrdonnanceController",
     "Method": "Delete",
+=======
+    "Method": "DeleteOrdonnance",
+>>>>>>> c584dda784870006b67316603a0b4e330c6c288a
     "RelativePath": "api/Ordonnance/{id}",
     "HttpMethod": "DELETE",
     "IsController": true,
@@ -153,6 +227,19 @@
     "ReturnTypes": []
   },
   {
+<<<<<<< HEAD
+=======
+    "ContainingType": "project.Controllers.OrdonnanceController",
+    "Method": "GetMesOrdonnances",
+    "RelativePath": "api/Ordonnance/MesOrdonnances",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [],
+    "ReturnTypes": []
+  },
+  {
+>>>>>>> c584dda784870006b67316603a0b4e330c6c288a
     "ContainingType": "project.Controllers.PatientController",
     "Method": "GetAllPatients",
     "RelativePath": "api/Patient",
