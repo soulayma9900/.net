@@ -11,7 +11,7 @@ namespace project.Data
         public DbSet<Pharmacien> Pharmaciens { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Ordonnance> Ordonnances { get; set; }
-        public DbSet<Medicament> Medicaments { get; set; }
+        public DbSet<Medicament> Medicaments { get; set; } 
 
     }
 }

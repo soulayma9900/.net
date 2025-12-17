@@ -1,0 +1,126 @@
+﻿@page "/pharmaciens/create"
+@page "/pharmaciens/edit/{Id:int}"
+@using pharmacieBlazor.Models
+@using pharmacieBlazor.Services.Interfaces
+@inject IPharmacienService PharmacienService
+@inject NavigationManager Navigation
+
+<h3>
+    <i class="bi bi-person-badge"></i> @(Id == 0 ? "Créer" : "Modifier") un Pharmacien
+</h3>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <EditForm Model="@pharmacien" OnValidSubmit="HandleValidSubmit">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary class="text-danger" />
+
+                    <div class="mb-3">
+                        <label for="nom" class="form-label">Nom complet *</label>
+                        <InputText id="nom" class="form-control" @bind-Value="pharmacien.Nom"
+                                   placeholder="Ex: Dr. Marie Martin" />
+                        <ValidationMessage For="@(() => pharmacien.Nom)" class="text-danger" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Email *</label>
+                        <InputText id="email" type="email" class="form-control" @bind-Value="pharmacien.Email"
+                                   placeholder="exemple@email.com" />
+                        <ValidationMessage For="@(() => pharmacien.Email)" class="text-danger" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">
+                            Mot de passe @(Id == 0 ? "*" : "(laisser vide pour ne pas modifier)")
+                        </label>
+                        <InputText id="password" type="password" class="form-control"
+                                   @bind-Value="pharmacien.Password"
+                                   placeholder="Min. 6 caractères" />
+                        <ValidationMessage For="@(() => pharmacien.Password)" class="text-danger" />
+                        @if (Id != 0)
+                        {
+                            <small class="form-text text-muted">
+                                Laissez ce champ vide si vous ne souhaitez pas modifier le mot de passe
+                            </small>
+                        }
+                    </div>
+
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary" disabled="@isSaving">
+                            @if (isSaving)
+                            {
+                                <span class="spinner-border spinner-border-sm" role="status"></span>
+                                <span> Enregistrement...</span>
+                            }
+                            else
+                            {
+                                <i class="bi bi-save"></i>
+                                <span> Enregistrer</span>
+                            }
+                        </button>
+                        <button type="button" class="btn btn-secondary" @onclick="Cancel">
+                            <i class="bi bi-x-circle"></i> Annuler
+                        </button>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private PharmacienDto pharmacien = new();
+    private bool isSaving = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Id != 0)
+        {
+            var existing = await PharmacienService.GetByIdAsync(Id);
+            if (existing != null)
+            {
+                pharmacien = existing;
+                pharmacien.Password = null; // Ne pas afficher le mot de passe
+            }
+            else
+            {
+                Navigation.NavigateTo("/pharmaciens");
+            }
+        }
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        isSaving = true;
+        try
+        {
+            if (Id == 0)
+            {
+                await PharmacienService.CreateAsync(pharmacien);
+            }
+            else
+            {
+                await PharmacienService.UpdateAsync(Id, pharmacien);
+            }
+            Navigation.NavigateTo("/pharmaciens");
+        }
+        catch (Exception)
+        {
+            // L'erreur est déjà gérée dans le service
+        }
+        finally
+        {
+            isSaving = false;
+        }
+    }
+
+    private void Cancel()
+    {
+        Navigation.NavigateTo("/pharmaciens");
+    }
+}

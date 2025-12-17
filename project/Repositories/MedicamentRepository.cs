@@ -14,6 +14,7 @@ namespace project.Repositories
             _context = context;
         }
 
+
         // Récupérer tous les médicaments
         public async Task<IEnumerable<Medicament>> GetAllAsync()
         {
@@ -30,8 +31,9 @@ namespace project.Repositories
         public async Task AddAsync(Medicament medicament)
         {
             await _context.Medicaments.AddAsync(medicament);
-            await _context.SaveChangesAsync();
+             await _context.SaveChangesAsync();
         }
+
 
         // Mettre à jour un médicament
         public async Task UpdateAsync(Medicament medicament)

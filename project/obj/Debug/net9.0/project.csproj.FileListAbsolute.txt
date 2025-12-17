@@ -347,3 +347,4 @@ C:\Users\amina\Source\Repos\.net\project\obj\Debug\net9.0\refint\project.dll
 C:\Users\amina\Source\Repos\.net\project\obj\Debug\net9.0\project.pdb
 C:\Users\amina\Source\Repos\.net\project\obj\Debug\net9.0\project.genruntimeconfig.cache
 C:\Users\amina\Source\Repos\.net\project\obj\Debug\net9.0\ref\project.dll
+C:\Users\21627\source\repos\project\project\obj\Debug\net9.0\project.sourcelink.json

@@ -1,0 +1,121 @@
+﻿@page "/patients/create"
+@page "/patients/edit/{Id:int}"
+@using PharmacieBlazorApp.Models
+@using PharmacieBlazorApp.Services.Interfaces
+@inject IPatientService PatientService
+@inject NavigationManager Navigation
+
+<h3>
+    <i class="bi bi-people-fill"></i> @(Id == 0 ? "Créer" : "Modifier") un Patient
+</h3>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card">
+            <div class="card-body">
+                <EditForm Model="@patient" OnValidSubmit="HandleValidSubmit">
+                    <DataAnnotationsValidator />
+                    <ValidationSummary class="text-danger" />
+
+                    <div class="mb-3">
+                        <label for="nom" class="form-label">Nom complet *</label>
+                        <InputText id="nom" class="form-control" @bind-Value="patient.Nom"
+                                   placeholder="Ex: Jean Dupont" />
+                        <ValidationMessage For="@(() => patient.Nom)" class="text-danger" />
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="dateNaissance" class="form-label">Date de naissance *</label>
+                        <InputDate id="dateNaissance" class="form-control" @bind-Value="patient.DateNaissance" />
+                        <ValidationMessage For="@(() => patient.DateNaissance)" class="text-danger" />
+                        @if (patient.DateNaissance != default(DateTime))
+                        {
+                            <small class="form-text text-muted">Âge: @CalculateAge(patient.DateNaissance) ans</small>
+                        }
+                    </div>
+
+                    <div class="mb-3">
+                        <button type="submit" class="btn btn-primary" disabled="@isSaving">
+                            @if (isSaving)
+                            {
+                                <span class="spinner-border spinner-border-sm" role="status"></span>
+                                <span> Enregistrement...</span>
+                            }
+                            else
+                            {
+                                <i class="bi bi-save"></i>
+                                <span> Enregistrer</span>
+                            }
+                        </button>
+                        <button type="button" class="btn btn-secondary" @onclick="Cancel">
+                            <i class="bi bi-x-circle"></i> Annuler
+                        </button>
+                    </div>
+                </EditForm>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    private PatientDto patient = new();
+    private bool isSaving = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        if (Id != 0)
+        {
+            var existing = await PatientService.GetByIdAsync(Id);
+            if (existing != null)
+            {
+                patient = existing;
+            }
+            else
+            {
+                Navigation.NavigateTo("/patients");
+            }
+        }
+    }
+
+    private async Task HandleValidSubmit()
+    {
+        isSaving = true;
+        try
+        {
+            if (Id == 0)
+            {
+                await PatientService.CreateAsync(patient);
+            }
+            else
+            {
+                patient.Id = Id;
+                await PatientService.UpdateAsync(patient);
+            }
+            Navigation.NavigateTo("/patients");
+        }
+        catch (Exception)
+        {
+            // L'erreur est déjà gérée dans le service
+        }
+        finally
+        {
+            isSaving = false;
+        }
+    }
+
+    private int CalculateAge(DateTime birthDate)
+    {
+        var today = DateTime.Today;
+        var age = today.Year - birthDate.Year;
+        if (birthDate.Date > today.AddYears(-age)) age--;
+        return age;
+    }
+
+    private void Cancel()
+    {
+        Navigation.NavigateTo("/patients");
+    }
+}

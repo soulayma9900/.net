@@ -38,6 +38,9 @@ namespace project
                 options => options.UseSqlServer(cnx));
             //injection  de rep 
             builder.Services.AddScoped<IMedicamentRepository, MedicamentRepository>();
+            builder.Services.AddScoped<IOrdonnanceRepository, OrdonnanceRepository>();
+
+
             builder.Services.AddScoped<IPatientRepository, PatientRepository>();
             builder.Services.AddScoped<IntIPharmacienRepository, PharmacienRepository>();
 

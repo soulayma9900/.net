@@ -10,11 +10,11 @@ namespace project.Models
         public DateTime Date { get; set; }
         
         public int PharmacienId { get; set; }
-        [ForeignKey("PharmacienId")]
-
+        [ForeignKey(nameof(PharmacienId))]
+        public Pharmacien? Pharmacien { get; set; }
 
         public int PatientId { get; set; }
-        [ForeignKey("PatientId")]
+        [ForeignKey(nameof(PatientId))]
         public Patient? Patient { get; set; }
 
         // Relation 1 ordonnance → plusieurs médicaments
